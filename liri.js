@@ -43,7 +43,7 @@ function Twitter() {
   client.get("statuses/user_timeline", params, function (error, tweets, response) {
 console.log(tweets.text);
       for (var i = 0; i > tweets; i++) {
-        console.log(tweets.text);
+        console.log(tweets[i].text);
         console.log('=================================');
 
         //   if (error) {
