@@ -1,10 +1,11 @@
 require("dotenv").config();
 
-var keys = require("./keys.js");
+var keys = require("./keys");
 var Twitter = require("twitter");
 var Spotify = require("node-spotify-api");
 var request = require("request");
 var fs = require("fs");
+//console.log(keys);
 
 //var spotify = new Spotify(keys.spotify);
 var client = new Twitter(keys.twitter);
@@ -13,17 +14,17 @@ var client = new Twitter(keys.twitter);
 var action = process.argv[2];
 
 // capture amount (if there is one)
-var amount = process.argv[3];
+//var command = process.argv[3];
 
 // do bank function based the value of variable "action"
 switch (action) {
   case 'my-tweets':
-    twitter();
+    Twitter();
     break;
-  case 'Spotify':
-    spotify();
+  case 'Spotify-this-song':
+    Spotify();
     break;
-  case 'Ombd':
+  case 'movie-this':
     Ombd();
     break;
   default:
@@ -32,35 +33,79 @@ switch (action) {
 }
 
 
-function twitter() {
+function Twitter() {
 
+  //This will show your last 20 tweets and when they were created at in your terminal/bash window.
   var params = {
     screen_name: "ballardcz1"
   };
 
   client.get("statuses/user_timeline", params, function (error, tweets, response) {
+console.log(tweets.text);
+      for (var i = 0; i > tweets; i++) {
+        console.log(tweets.text);
+        console.log('=================================');
 
-          if (error) {
-            throw error;
-          } else {
-            console.log(tweets[i].text); 
-            console.log(tweets[i].created_at);
-            console.log(tweets[i].user);  
-            console.log('=================================');
-            console.log(response); 
-          }
-        });
-      }
+        //   if (error) {
+        //     console.log(error);
+        //   } else {
 
-      // var queryURL = "https://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy";
+        //     for (var i = 0; i < tweets; i ++) {
+        //     console.log('=================================');
+        //     console.log(tweets.text);
+        //     console.log('=================================');
+        //     console.log(tweets[i].created_at);
+        //     // console.log(tweets[i].);  
+        //     console.log('=================================');
+        //     //  console.log(response); 
+        //   }
+        // }
+      }});
+  }
 
-      //       $.ajax({
-      //         url: queryURL,
-      //         method: "GET"
-      //       }).then(function (response) {
-      //         console.log(response);
-      //         // Obtain a reference to the tbody element in the DOM
-      //         var tbody = $("tbody");
-      //         // Create and save a reference to new empty table row
-      //         var trow = $("<tr>");
-      //         // Create and save references to 3 td elements containing the Title, Year, and Actors from the AJAX response object
+
+  function Ombd() {
+
+    var movie = process.argv[3];
+    // movie = [];
+
+    if (movie !== "") {
+
+  //     * Title of the movie.
+  // * Year the movie came out.
+  // * IMDB Rating of the movie.
+  // * Rotten Tomatoes Rating of the movie.
+  // * Country where the movie was produced.
+  // * Language of the movie.
+  // * Plot of the movie.
+  // * Actors in the movie.
+  // * If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
+      var queryURL = "https://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy";
+
+      $.ajax({
+        url: queryURL,
+        method: "GET"
+      }).then(function (res) {
+        //console.log(res);
+        console.log(res.title);
+      //  console.log(res.)
+        
+      })
+    } else {
+      console.log("Hey put in a movie title!")
+    }
+  }
+
+  function Spotify() {
+    // This will show the following information about the song in your terminal/bash window
+
+    // Artist(s)
+    
+    // The song's name
+    
+    // A preview link of the song from Spotify
+    
+    // The album that the song is from
+    
+    // If no song is provided then your program will default to "The Sign" by Ace of Base.
+  }
